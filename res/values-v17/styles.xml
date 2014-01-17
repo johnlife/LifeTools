@@ -1,0 +1,7 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- remove pre-4.2 checkbox padding hack -->
+    <style name="panelSelectable" parent="panel"/>
+    
+
+</resources>

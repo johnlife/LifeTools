@@ -1,5 +1,5 @@
 package ru.johnlife.lifetools.task;
 
-public interface OnTaskCompleteListener<E> extends OnUnbreakableTaskCompleteListener<E> {
+public interface OnTaskCompleteListener<E> extends OnCompleteListener<E> {
 	void error(String message);
 }

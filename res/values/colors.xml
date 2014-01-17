@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pressed">#c0df</color>
+    <color name="background_accent">#9fff</color>
+    <color name="text_dimmed">#6000</color>
+</resources>
