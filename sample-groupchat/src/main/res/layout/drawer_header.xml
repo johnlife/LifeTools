@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/drawer_background"
+        android:layout_alignBottom="@+id/user"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="-x-"
+        android:id="@+id/user"
+        android:textColor="@android:color/primary_text_dark"
+        android:padding="16dp"
+        android:layout_gravity="right|bottom"
+        android:layout_below="@+id/main_avatar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="right" />
+
+    <ImageButton
+        style="?borderlessButtonStyle"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/main_avatar"
+        android:layout_gravity="right|top"
+        android:src="@drawable/avatar"
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="48dp" />
+</RelativeLayout>

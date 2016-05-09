@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/default_margin"
+    android:layout_marginRight="@dimen/default_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:text="@string/heading_login_1"
+        android:id="@+id/headline"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/default_margin" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="@string/button_next"
+        style="?attr/borderlessButtonStyle"
+        android:id="@+id/do_login"
+        android:layout_below="@+id/headline"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentRight="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/do_login"
+        android:layout_toStartOf="@+id/do_login"
+        android:layout_alignBottom="@+id/do_login"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/do_login">
+
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_username"
+            android:lines="1" >
+            <requestFocus/>
+        </EditText>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/or"
+        android:layout_alignParentBottom="false"
+        android:layout_below="@+id/do_login"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/or" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/or"
+        android:layout_alignBaseline="@+id/or"
+        android:layout_marginRight="4dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/or"
+        android:layout_alignBaseline="@+id/or"
+        android:layout_marginLeft="4dp" />
+
+    <Button
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/google"
+        android:text="G+"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/or"
+        android:layout_toLeftOf="@+id/or"
+        android:layout_toStartOf="@+id/or" />
+
+    <Button
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:text="f"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:layout_alignBaseline="@+id/google"
+        android:layout_alignBottom="@+id/google"
+        android:layout_toRightOf="@+id/or"
+        android:layout_alignRight="@+id/do_login"
+        android:layout_alignEnd="@+id/do_login" />
+
+</RelativeLayout>

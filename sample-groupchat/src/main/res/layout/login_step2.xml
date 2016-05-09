@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/default_margin"
+    android:layout_marginRight="@dimen/default_margin"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:text="@string/heading_login_2"
+        android:id="@+id/headline"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/default_margin" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="@string/button_login"
+        style="?attr/borderlessButtonStyle"
+        android:id="@+id/do_login"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/headline" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/do_login"
+        android:layout_toStartOf="@+id/do_login"
+        android:layout_alignBottom="@+id/do_login"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/do_login">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_password"
+            android:lines="1">
+            <requestFocus/>
+        </EditText>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/holo_red_dark"
+        android:id="@+id/error"
+        android:layout_below="@+id/do_login"
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/not_you"
+        android:layout_alignParentBottom="false"
+        android:layout_below="@+id/error"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/or" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/or"
+        android:layout_alignBaseline="@+id/or"
+        android:layout_marginRight="4dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/or"
+        android:layout_alignBaseline="@+id/or"
+        android:layout_marginLeft="4dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:text="@string/create_btn"
+        style="?attr/borderlessButtonStyle"
+        android:id="@+id/create"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/or" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/do_login"
+        android:layout_toStartOf="@+id/do_login"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/create"
+        android:layout_alignBottom="@+id/create">
+
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_another_username"
+            android:lines="1"/>
+
+    </android.support.design.widget.TextInputLayout>
+</RelativeLayout>

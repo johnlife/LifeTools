@@ -1,0 +1,6 @@
+*.iml
+libraries/*
+!libraries/LifetoolsNew*
+!libraries/Lifetools Reporter*
+!libraries/Lifetools Rest*
+!libraries/Lifetools FireBase*
