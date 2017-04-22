@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/node_header"
+        android:baselineAligned="false"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/node_icon"
+            android:src="@drawable/arrow_up"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="1dp"/>
+
+        <TextView
+            android:id="@+id/node_title"
+            style="@style/PlaxienNodeName" />
+
+        <TextView
+            android:id="@+id/node_num_children"
+            style="@style/PlaxienNodeCounter" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:id="@+id/node_items"
+        android:showDividers="middle|end"
+        android:divider="@android:drawable/divider_horizontal_bright"
+        android:visibility="visible"/>
+
+</LinearLayout>
