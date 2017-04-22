@@ -19,4 +19,8 @@ public class DateUtil {
         tmp.set(Calendar.MILLISECOND,1);
         return tmp.getTimeInMillis();
     }
+
+    public static synchronized long getBeginOfTheDay() {
+        return getBeginOfTheDay(System.currentTimeMillis());
+    }
 }

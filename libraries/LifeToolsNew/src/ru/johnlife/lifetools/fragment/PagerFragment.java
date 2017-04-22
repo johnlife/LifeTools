@@ -1,8 +1,11 @@
 package ru.johnlife.lifetools.fragment;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,12 +29,48 @@ public abstract class PagerFragment extends BaseAbstractFragment {
         BaseAbstractFragment createFragment();
     }
     public class TabDescriptor {
-        private int title;
+        private @StringRes int title = -1;
+        private String titleString = null;
+        private @DrawableRes int icon = -1;
+        private Drawable iconDrawable = null;
         private FragmentFactory factory;
 
-        public TabDescriptor(int title, FragmentFactory factory) {
+        public TabDescriptor(@StringRes int title, FragmentFactory factory) {
             this.title = title;
             this.factory = factory;
+        }
+
+        public TabDescriptor(String title, FragmentFactory factory) {
+            this.titleString = title;
+            this.factory = factory;
+        }
+
+        public TabDescriptor(@StringRes int title, @DrawableRes int icon, FragmentFactory factory) {
+            this.title = title;
+            this.icon = icon;
+            this.factory = factory;
+        }
+
+        public TabDescriptor(@StringRes int title, Drawable iconDrawable, FragmentFactory factory) {
+            this.title = title;
+            this.iconDrawable = iconDrawable;
+            this.factory = factory;
+        }
+
+        public TabDescriptor(String titleString, @DrawableRes int icon, FragmentFactory factory) {
+            this.titleString = titleString;
+            this.icon = icon;
+            this.factory = factory;
+        }
+
+        public TabDescriptor(String titleString, Drawable iconDrawable, FragmentFactory factory) {
+            this.titleString = titleString;
+            this.iconDrawable = iconDrawable;
+            this.factory = factory;
+        }
+
+        public boolean hasIcon() {
+            return icon != -1 || iconDrawable != null;
         }
     }
     private static class FragmentPagerAdapter extends PagerAdapter {
@@ -128,24 +167,41 @@ public abstract class PagerFragment extends BaseAbstractFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return context.getString(mFragmentList.get(position).title);
+            TabDescriptor descriptor = mFragmentList.get(position);
+            return null == descriptor.titleString ? context.getString(descriptor.title) : descriptor.titleString;
         }
 
     }
 
     protected ViewPager pager;
     private TabLayout tabLayout;
+    private FragmentPagerAdapter adapter;
+
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
+        View view = inflater.inflate(getLayoutId(), container, true);
         pager = (ViewPager) view.findViewById(getPagerId());
-        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getChildFragmentManager(), inflater.getContext());
-        for (TabDescriptor tab : getTabDescriptors()) {
+        adapter = new FragmentPagerAdapter(getChildFragmentManager(), inflater.getContext());
+        TabDescriptor[] descriptors = getTabDescriptors();
+        for (TabDescriptor tab : descriptors) {
             adapter.addFragment(tab);
         }
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
+        for (int i=0; i < tabLayout.getTabCount(); i++) {
+            TabDescriptor descriptor = descriptors[i];
+            if (descriptor.hasIcon()) {
+                TabLayout.Tab tab = tabLayout.getTabAt(i);
+                if (null != tab) {
+                    if (descriptor.iconDrawable != null) {
+                        tab.setIcon(descriptor.iconDrawable);
+                    } else {
+                        tab.setIcon(descriptor.icon);
+                    }
+                }
+            }
+        }
         setHasOptionsMenu(true);
         if (savedInstanceState != null && null != pager) {
             pager.setCurrentItem(savedInstanceState.getInt(STATE_INDEX, 0));
@@ -168,8 +224,8 @@ public abstract class PagerFragment extends BaseAbstractFragment {
     }
 
     @Override
-    protected AppBarLayout getToolbar(LayoutInflater inflater, ViewGroup container) {
-        AppBarLayout value = createToolbarFrom(R.layout.toolbar_main);
+    protected final AppBarLayout getToolbar(LayoutInflater inflater, ViewGroup container) {
+        AppBarLayout value = createToolbarFrom(R.layout.toolbar_pager);
         setTabLayout((TabLayout) value.findViewById(R.id.tabs));
         return value;
     }
@@ -180,5 +236,13 @@ public abstract class PagerFragment extends BaseAbstractFragment {
         if (null != pager) {
             outState.putInt(STATE_INDEX, pager.getCurrentItem());
         }
+    }
+
+    protected FragmentPagerAdapter getAdapter() {
+        return adapter;
+    }
+
+    protected ViewPager getPager() {
+        return pager;
     }
 }

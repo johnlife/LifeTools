@@ -72,6 +72,13 @@ public class DeviceScreen {
 	public float getDensity() {
 		return density;
 	}
-	
-	
+
+
+	public boolean isLandscape() {
+		return width > height;
+	}
+
+	public boolean isPortrait() {
+		return width < height;
+	}
 }

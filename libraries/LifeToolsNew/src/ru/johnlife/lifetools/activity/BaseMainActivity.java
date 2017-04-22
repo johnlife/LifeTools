@@ -17,6 +17,9 @@ import ru.johnlife.lifetools.fragment.BaseAbstractFragment;
  */
 public abstract class BaseMainActivity extends BaseActivity {
     public interface BackHandler {
+        /**
+         * @return <code>true</code> if back was handled and no processing should follow, <code>false</code> otherwise
+         */
         boolean handleBack();
     }
 
@@ -98,6 +101,11 @@ public abstract class BaseMainActivity extends BaseActivity {
 
     public void changeFragment(BaseAbstractFragment fragment, boolean addToBack) {
         if (fragment == null || currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) return;
+        if (!addToBack) {
+            while (fragmentManager().getBackStackEntryCount() > 0) {
+                fragmentManager().popBackStackImmediate();
+            }
+        }
         currentFragment = fragment;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction().replace(contentId, fragment);
         if (addToBack) ft.addToBackStack(null);

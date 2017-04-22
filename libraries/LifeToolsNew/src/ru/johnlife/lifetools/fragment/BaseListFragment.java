@@ -21,7 +21,6 @@ public abstract class BaseListFragment<T extends AbstractData> extends BaseAbstr
 	private BaseAdapter<T> adapter;
 
 	protected abstract BaseAdapter<T> instantiateAdapter(Context context);
-	protected abstract void onItemClick(T item);
 
 	protected int getLayoutId() {
 		return R.layout.fragment_list;

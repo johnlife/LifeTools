@@ -3,6 +3,8 @@ package ru.johnlife.lifetools.fragment;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -35,6 +37,36 @@ public abstract class BaseAbstractFragment extends Fragment implements Constants
 	private View mainView;
 	private Toolbar toolbar;
 
+	public void addParam(String name, String value) {
+		getParams().putString(name, value);
+	}
+
+	public void addParam(String name, int value) {
+		getParams().putInt(name, value);
+	}
+
+	public void addParam(String name, long value) {
+		getParams().putLong(name, value);
+	}
+
+	public void addParam(String name, boolean value) {
+		getParams().putBoolean(name, value);
+	}
+
+	public void addParam(String name, Parcelable value) {
+		getParams().putParcelable(name, value);
+	}
+
+
+	@NonNull
+	private Bundle getParams() {
+		Bundle arguments = getArguments();
+		if (arguments == null) {
+			arguments = new Bundle();
+			setArguments(arguments);
+		}
+		return arguments;
+	}
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -70,16 +102,27 @@ public abstract class BaseAbstractFragment extends Fragment implements Constants
 		AppBarLayout appbar = getToolbar(inflater, coordinator);
 		if (null != appbar) {
 			toolbar = findToolBar(appbar);
-			BaseActivity baseActivity = getBaseActivity();
+			final BaseActivity baseActivity = getBaseActivity();
 			baseActivity.setToolbar(toolbar);
 			ActionBar actionBar = baseActivity.getSupportActionBar();
-			if (actionBar != null) {
-				String title = getTitle(inflater.getContext().getResources());
-				if (null != title) {
-					toolbar.setTitle(title);
+			final String title = getTitle(inflater.getContext().getResources());
+			if (null != title) {
+				if (null != toolbar) toolbar.setTitle(title);
+				if (null != actionBar) {
 					actionBar.setTitle(title);
+					actionBar.setDisplayHomeAsUpEnabled(isUpAsHomeEnabled());
+				} else {
+					coordinator.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							ActionBar actionBar = baseActivity.getSupportActionBar();
+							if (null != actionBar) {
+								actionBar.setTitle(title);
+								actionBar.setDisplayHomeAsUpEnabled(isUpAsHomeEnabled());
+							}
+						}
+					}, 100);
 				}
-				actionBar.setDisplayHomeAsUpEnabled(isUpAsHomeEnabled());
 			}
 			coordinator.addView(appbar, 0);
 		}
@@ -88,7 +131,12 @@ public abstract class BaseAbstractFragment extends Fragment implements Constants
 		if (mainView == coordinator) { //was added to coordinator already
 			mainView = coordinator.getChildAt(idx);
 		}
-		CoordinatorLayout.LayoutParams layout = (CoordinatorLayout.LayoutParams) mainView.getLayoutParams();
+		CoordinatorLayout.LayoutParams layout;
+		try {
+			layout = (CoordinatorLayout.LayoutParams) mainView.getLayoutParams();
+		} catch (ClassCastException e) {
+			layout = new CoordinatorLayout.LayoutParams(mainView.getLayoutParams());
+		}
 		if (layout != null && null == layout.getBehavior()) {
 			layout.setBehavior(new AppBarLayout.ScrollingViewBehavior());
 			mainView.setLayoutParams(layout);
@@ -114,22 +162,9 @@ public abstract class BaseAbstractFragment extends Fragment implements Constants
 	/**
 	 * Will not be called if getToolbar returned null
 	 */
-	protected abstract String getTitle(Resources res);
+	protected abstract String getTitle(Resources r);
 
 	protected abstract AppBarLayout getToolbar(LayoutInflater inflater, ViewGroup container);
-
-	protected void recreateView() {
-		if (null == mainView) return;
-		ViewGroup parent = (ViewGroup) mainView.getParent();
-		for (int i=0; i<parent.getChildCount(); i++) {
-			if (mainView == parent.getChildAt(i)) {
-				parent.removeViewAt(i);
-				onCreateView(inflater, parent, null);
-				parent.addView(mainView, i);
-				return;
-			}
-		}
-	}
 
 	protected AppBarLayout defaultToolbar() {
 		return createToolbarFrom(R.layout.toolbar_default);

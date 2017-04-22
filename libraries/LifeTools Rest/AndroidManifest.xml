@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.johnlife.lifetools.legacy"
+    package="ru.johnlife.lifetools.rest"
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
+    <application>
+        <activity android:name=".oauth.activity.SigninActivity" android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"/>
+    </application>
 </manifest>

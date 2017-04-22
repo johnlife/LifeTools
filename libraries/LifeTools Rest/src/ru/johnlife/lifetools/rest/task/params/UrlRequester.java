@@ -11,11 +11,16 @@ public class UrlRequester extends AbstractUrlencodingRequester {
         super(Request.Method.GET, url, params);
     }
 
+    public UrlRequester(int method, String url, Object[][] params) {
+        super(method, url, params);
+    }
+
     @Override
     public String getUrl() {
-        return new StringBuilder(super.getUrl())
+        String encodedParams = encodeParams();
+        return null == encodedParams ? super.getUrl() : new StringBuilder(super.getUrl())
             .append("?")
-            .append(encodeParams())
+            .append(encodedParams)
             .toString();
     }
 

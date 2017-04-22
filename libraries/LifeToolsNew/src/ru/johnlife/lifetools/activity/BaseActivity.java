@@ -65,7 +65,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Thread.setDefaultUncaughtExceptionHandler(UpmobileExceptionReporter.getInstance(this));
-		serviceIntent = getClassConstants().getBackgroundServiceIntent(this);
+		ClassConstantsProvider classConstants = getClassConstants();
+		serviceIntent = classConstants.getBackgroundServiceIntent(this);
 	}
 
 	@Override

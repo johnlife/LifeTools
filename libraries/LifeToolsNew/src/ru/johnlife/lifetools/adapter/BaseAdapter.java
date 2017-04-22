@@ -21,20 +21,6 @@ public abstract class BaseAdapter<T extends AbstractData> extends RecyclerView.A
         public ViewHolder(View itemView) {
             super(itemView);
         }
-
-        protected abstract class ItemizedClickListener implements View.OnClickListener {
-            private T item;
-
-            public T getItem() {
-                return item;
-            }
-
-            public void setItem(T item) {
-                this.item = item;
-            }
-
-        }
-
         protected void assign(T item) {
             this.item = item;
             hold(item);
@@ -84,13 +70,13 @@ public abstract class BaseAdapter<T extends AbstractData> extends RecyclerView.A
     }
 
     public T getItem(int position) {
-        if (null == items) throw new IllegalStateException("Internal collection is empty");
+        if (null == items) throw new IllegalStateException("Internal collection is null");
         if (position < 0 || position >= items.size()) throw new IllegalArgumentException("size is "+items.size()+", requested position is "+position);
         return items.get(position);
     }
 
     public T remove(int position) {
-        if (null == items) throw new IllegalStateException("Internal collection is empty");
+        if (null == items) throw new IllegalStateException("Internal collection is null");
         if (position < 0 || position >= items.size()) throw new IllegalArgumentException("size is "+items.size()+", requested position is "+position);
         T item = items.remove(position);
         notifyItemRemoved(position);
@@ -108,8 +94,10 @@ public abstract class BaseAdapter<T extends AbstractData> extends RecyclerView.A
 
     public void remove(T item) {
         int position = items.indexOf(item);
-        items.remove(position);
-        notifyItemRemoved(position);
+        if (-1 != position) {
+            items.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     public void replace(T item) {
@@ -117,20 +105,24 @@ public abstract class BaseAdapter<T extends AbstractData> extends RecyclerView.A
     }
 
     public void replace(T item, int position) {
-        items.set(position, item);
-        notifyItemChanged(position);
+        if (-1 == position) {
+            add(item);
+        } else {
+            items.set(position, item);
+            notifyItemChanged(position);
+        }
     }
 
-    protected int indexOf(T item) {
+    public int indexOf(T item) {
         return items.indexOf(item);
     }
 
-    protected void clear() {
+    public void clear() {
         items.clear();
         notifyDataSetChanged();
     }
 
-    protected void addAll(Collection<? extends T> collection) {
+    public void addAll(Collection<? extends T> collection) {
         for (T item : collection) { //just to trigger proper animation
             add(item);
         }

@@ -5,7 +5,7 @@ allprojects {
     }
 
     dependencies {
-        compile 'com.android.volley:volley:1+'
+        compile 'com.android.volley:volley:1.0.0'
         compile 'com.github.scribejava:scribejava-core:2.5.3'
         compile 'com.github.scribejava:scribejava:2.5.3'
     }
@@ -15,8 +15,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

@@ -1,6 +1,7 @@
 package ru.johnlife.lifetools.rest.task;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -49,7 +50,12 @@ public abstract class AbstractJsonArrayTask<Item> extends AbstractRestTask<List<
 		int size = array.length();
 		List<Item> value = new ArrayList<Item>();
 		for (int i=0; i<size; i++) {
-			value.add(createItem(array.getJSONObject(i)));
+			try {
+				value.add(createItem(array.getJSONObject(i)));
+			} catch (JSONException e) {
+				Log.w(getClass().getSimpleName(), "Exception in creating an item", e);
+				//just proceed to the next item
+			}
 		}
 		return value;
 	}

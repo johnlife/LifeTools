@@ -1,5 +1,6 @@
 package ru.johnlife.lifetools.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.johnlife.lifetools.Constants;
 import ru.johnlife.lifetools.R;
+import ru.johnlife.lifetools.fragment.BaseAbstractFragment;
 
 /**
  * Created by yanyu on 4/25/2016.
@@ -41,6 +44,10 @@ public abstract class BaseDrawerActivity extends BaseMainActivity {
             this.menuId = menuId;
             this.widthDimenId = widthDimenId;
         }
+
+        protected int getFooterLayoutId() {
+            return -1;
+        }
     }
     private NavigationView drawerMenu;
     private DrawerLayout drawer;
@@ -64,6 +71,9 @@ public abstract class BaseDrawerActivity extends BaseMainActivity {
         drawerMenu.inflateMenu(dd.menuId);
         drawerMenu.inflateHeaderView(dd.headerLayoutId);
         drawer.addView(drawerMenu, layout);
+        if (dd.getFooterLayoutId() != -1) {
+            getLayoutInflater().inflate(dd.getFooterLayoutId(), drawerMenu, true);
+        }
         drawerMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -147,5 +157,19 @@ public abstract class BaseDrawerActivity extends BaseMainActivity {
             drawer.closeDrawer(GravityCompat.START);
         }
     }
+
+    @Override
+    public void changeFragment(BaseAbstractFragment fragment, boolean addToBack) {
+        if (addToBack) {
+            Intent i = new Intent(this, getChildActivityClass());
+            i.putExtra(Constants.EXTRA_FRAGMENT, fragment.getClass().getName());
+            i.putExtra(Constants.EXTRA_ARGUMENTS, fragment.getArguments());
+            startActivity(i);
+        } else {
+            super.changeFragment(fragment, addToBack);
+        }
+    }
+
+    protected abstract Class<? extends BaseChildActivity> getChildActivityClass();
 
 }

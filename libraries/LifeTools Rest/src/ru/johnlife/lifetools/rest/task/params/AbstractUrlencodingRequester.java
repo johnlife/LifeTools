@@ -12,8 +12,10 @@ public abstract class AbstractUrlencodingRequester extends Requester {
     }
 
     protected String encodeParams() {
+        Object[][] params = getParams();
+        if (null == params) return null;
         StringBuilder b = new StringBuilder();
-        for (Object[] param : getParams()) {
+        for (Object[] param : params) {
             b.append(Uri.encode(param[0].toString()))
                     .append('=')
                     .append(Uri.encode(param[1].toString()))
